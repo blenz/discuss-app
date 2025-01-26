@@ -2,7 +2,8 @@ import Header from '@/components/header'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import Providers from './providers'
+import { NextUIProvider } from '@nextui-org/react'
+import { SessionProvider } from 'next-auth/react'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,10 +28,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="container mx-auto px-4 max-w-6xl">
-          <Providers>
-            <Header />
-            {children}
-          </Providers>
+          <SessionProvider>
+            <NextUIProvider>
+              <Header />
+              {children}
+            </NextUIProvider>
+          </SessionProvider>
         </div>
       </body>
     </html>
