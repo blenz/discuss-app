@@ -11,7 +11,7 @@ const createCommentSchema = z.object({
 })
 
 interface CreateCommentFormState {
-  errors: {
+  errors: null | {
     content?: string[]
     _form?: string[]
   }
