@@ -17,9 +17,7 @@ interface PostCreateFormProps {
 }
 
 function PostCreateForm({ slug }: PostCreateFormProps) {
-  const [{ errors }, action, loading] = useActionState(createPost.bind(null, slug), {
-    errors: null,
-  })
+  const [{ formErrors }, action, loading] = useActionState(createPost.bind(null, slug), {})
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -39,15 +37,15 @@ function PostCreateForm({ slug }: PostCreateFormProps) {
               name="title"
               labelPlacement="outside"
               placeholder="Title"
-              isInvalid={!!errors?.title}
-              errorMessage={errors?.title?.join(', ')}
+              isInvalid={!!formErrors?.title}
+              errorMessage={formErrors?.title?.join(', ')}
             />
             <Textarea
               name="content"
               labelPlacement="outside"
               placeholder="Content"
-              isInvalid={!!errors?.content}
-              errorMessage={errors?.content?.join(', ')}
+              isInvalid={!!formErrors?.content}
+              errorMessage={formErrors?.content?.join(', ')}
             />
             <Button type="submit" isLoading={loading}>
               Submit

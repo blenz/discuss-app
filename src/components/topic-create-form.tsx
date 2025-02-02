@@ -13,7 +13,7 @@ import {
 import { startTransition, useActionState } from 'react'
 
 function TopicCreateForm() {
-  const [{ errors }, action, loading] = useActionState(createTopic, { errors: null })
+  const [{ formErrors }, action, loading] = useActionState(createTopic, {})
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -33,15 +33,15 @@ function TopicCreateForm() {
               name="name"
               labelPlacement="outside"
               placeholder="Name"
-              isInvalid={!!errors?.name}
-              errorMessage={errors?.name?.join(', ')}
+              isInvalid={!!formErrors?.name}
+              errorMessage={formErrors?.name?.join(', ')}
             />
             <Textarea
               name="description"
               labelPlacement="outside"
               placeholder="Description"
-              isInvalid={!!errors?.description}
-              errorMessage={errors?.description?.join(', ')}
+              isInvalid={!!formErrors?.description}
+              errorMessage={formErrors?.description?.join(', ')}
             />
             <Button type="submit" isLoading={loading}>
               Submit

@@ -6,27 +6,27 @@ import { useActionState, useEffect, useRef, useState } from 'react'
 
 interface CommentCreateFormProps {
   postId: string
-  parentId?: string
+  parentId: string | null
   startOpen?: boolean
 }
 
 export default function CommentCreateForm({ postId, parentId, startOpen }: CommentCreateFormProps) {
   const ref = useRef<HTMLFormElement | null>(null)
   const [open, setOpen] = useState(startOpen)
-  const [formState, action, loading] = useActionState(
+  const [{ error, formErrors }, action, loading] = useActionState(
     createComment.bind(null, { postId, parentId }),
-    { errors: null }
+    {}
   )
 
   useEffect(() => {
-    if (formState.success) {
+    if (!error) {
       ref.current?.reset()
 
       if (!startOpen) {
         setOpen(false)
       }
     }
-  }, [formState, startOpen])
+  }, [error, startOpen])
 
   const form = (
     <form action={action} ref={ref}>
@@ -34,8 +34,8 @@ export default function CommentCreateForm({ postId, parentId, startOpen }: Comme
         <Textarea
           name="content"
           placeholder="Enter your comment"
-          isInvalid={!!formState.errors?.content}
-          errorMessage={formState.errors?.content?.join(', ')}
+          isInvalid={!!formErrors?.content}
+          errorMessage={formErrors?.content?.join(', ')}
         />
 
         <Button type="submit" isLoading={loading}>
