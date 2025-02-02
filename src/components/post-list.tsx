@@ -1,4 +1,4 @@
-import { PostData } from '@/lib/db/queries/posts'
+import { PostData } from '@/lib/db/posts'
 import paths from '@/lib/paths'
 import Link from 'next/link'
 

@@ -1,5 +1,5 @@
 import CommentCreateForm from '@/components/comment-create-form'
-import type { CommentWithAuthor } from '@/lib/db/queries/comments'
+import type { CommentWithAuthor } from '@/lib/db/comments'
 import Image from 'next/image'
 
 interface CommentViewProps {

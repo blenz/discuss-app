@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { postRepository } from '@/repositories/posts'
 import { notFound } from 'next/navigation'
 
 interface PostViewProps {
@@ -6,7 +6,7 @@ interface PostViewProps {
 }
 
 export default async function PostView({ postId }: PostViewProps) {
-  const post = await db.post.findFirst({ where: { id: postId } })
+  const post = await postRepository.getById(postId)
   if (!post) notFound()
 
   return (

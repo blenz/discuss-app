@@ -2,8 +2,8 @@ import CommentCreateForm from '@/components/comment-create-form'
 import CommentList from '@/components/comment-list'
 import PostView from '@/components/post-view'
 import PostViewLoading from '@/components/post-view-loading'
-import { fetchCommentsByPostId } from '@/lib/db/queries/comments'
 import paths from '@/lib/paths'
+import { commentRepository } from '@/repositories/comments'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -26,7 +26,7 @@ export default async function PostViewPage({ params }: PostViewPageProps) {
         <PostView postId={postId} />
       </Suspense>
       <CommentCreateForm postId={postId} startOpen />
-      <CommentList fetchComments={() => fetchCommentsByPostId(postId)} />
+      <CommentList fetchComments={() => commentRepository.getCommentsByPostId(postId)} />
     </div>
   )
 }

@@ -1,8 +1,9 @@
 'use server'
 
 import { auth } from '@/lib/auth'
-import { db } from '@/lib/db'
 import paths from '@/lib/paths'
+import { commentRepository } from '@/repositories/comments'
+import { topicRepository } from '@/repositories/topics'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
@@ -19,7 +20,7 @@ interface CreateCommentFormState {
 }
 
 export async function createComment(
-  { postId, parentId }: { postId: string; parentId?: string },
+  { postId, parentId }: { postId: string; parentId: string },
   formState: CreateCommentFormState,
   formData: FormData
 ): Promise<CreateCommentFormState> {
@@ -43,13 +44,11 @@ export async function createComment(
   }
 
   try {
-    await db.comment.create({
-      data: {
-        content: result.data.content,
-        postId: postId,
-        parentId: parentId,
-        userId: session.user.id,
-      },
+    await commentRepository.create({
+      postId,
+      parentId,
+      content: result.data.content,
+      userId: session.user.id,
     })
   } catch (err) {
     if (err instanceof Error) {
@@ -67,10 +66,7 @@ export async function createComment(
     }
   }
 
-  const topic = await db.topic.findFirst({
-    where: { posts: { some: { id: postId } } },
-  })
-
+  const topic = await topicRepository.getByPostId(postId)
   if (!topic) {
     return {
       errors: {

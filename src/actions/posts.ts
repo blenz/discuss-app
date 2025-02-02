@@ -1,8 +1,9 @@
 'use server'
 
 import { auth } from '@/lib/auth'
-import { db } from '@/lib/db'
 import paths from '@/lib/paths'
+import { postRepository } from '@/repositories/posts'
+import { topicRepository } from '@/repositories/topics'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
@@ -39,16 +40,14 @@ export async function createPost(
   const session = await auth()
   if (!session?.user?.id) return { errors: null }
 
-  const topic = await db.topic.findFirst({ where: { slug } })
+  const topic = await topicRepository.getBySlug(slug)
   if (!topic) return { errors: null }
 
-  const post = await db.post.create({
-    data: {
-      title: parsed.data.title,
-      content: parsed.data.content,
-      userId: session.user.id,
-      topicId: topic.id,
-    },
+  const post = await postRepository.create({
+    title: parsed.data.title,
+    content: parsed.data.content,
+    userId: session.user.id,
+    topicId: topic.id,
   })
 
   revalidatePath(paths.topicView(slug))

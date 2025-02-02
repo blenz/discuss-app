@@ -1,7 +1,9 @@
 'use server'
 
+import { Topic } from '@/lib/db'
 import { db } from '@/lib/db'
 import paths from '@/lib/paths'
+import { topicRepository } from '@/repositories/topics'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
@@ -34,13 +36,12 @@ export async function createTopic(
     return { errors: parsed.error.flatten().fieldErrors }
   }
 
-  const topic = await db.topic.create({
-    data: {
-      slug: parsed.data.name,
-      description: parsed.data.description,
+  const topic = await topicRepository.create({
+    slug: parsed.data.name,
+    description: parsed.data.description,
     },
   })
 
-  revalidatePath('/')
+  revalidatePath(paths.home())
   redirect(paths.topicView(topic.slug))
 }

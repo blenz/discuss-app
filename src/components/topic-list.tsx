@@ -1,10 +1,10 @@
-import { db } from '@/lib/db'
 import paths from '@/lib/paths'
+import { topicRepository } from '@/repositories/topics'
 import { Chip } from '@nextui-org/react'
 import Link from 'next/link'
 
 async function TopicList() {
-  const topics = await db.topic.findMany()
+  const topics = await topicRepository.getAll()
 
   return (
     <div className="flex flex-row flex-wrap gap-2">
