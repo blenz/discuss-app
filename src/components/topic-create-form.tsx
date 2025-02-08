@@ -10,12 +10,12 @@ import {
   PopoverTrigger,
   Textarea,
 } from '@nextui-org/react'
-import { startTransition, useActionState } from 'react'
+import { FormEvent, startTransition, useActionState } from 'react'
 
 function TopicCreateForm() {
   const [{ formErrors }, action, loading] = useActionState(createTopic, {})
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     startTransition(() => action(new FormData(event.currentTarget)))
   }

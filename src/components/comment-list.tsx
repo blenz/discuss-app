@@ -1,5 +1,5 @@
 import CommentView from '@/components/comment-view'
-import type { CommentWithAuthor } from '@/lib/db/comments'
+import { CommentWithAuthor } from '@/repositories/comments'
 
 interface CommentListProps {
   fetchComments: () => Promise<CommentWithAuthor[]>

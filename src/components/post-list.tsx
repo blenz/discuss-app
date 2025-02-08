@@ -1,5 +1,5 @@
-import { PostData } from '@/lib/db/posts'
 import paths from '@/lib/paths'
+import { PostData } from '@/repositories/posts'
 import Link from 'next/link'
 
 interface PostListProps {
