@@ -7,17 +7,21 @@ async function TopicList() {
   const topics = await topicRepository.getAll()
 
   return (
-    <div className="flex flex-row flex-wrap gap-2">
-      {topics.map(topic => (
-        <div key={topic.id}>
-          <Link href={paths.topicView(topic.slug)}>
-            <Chip color="warning" variant="shadow">
-              {topic.slug}
-            </Chip>
-          </Link>
-        </div>
-      ))}
-    </div>
+    <>
+      <h3 className="text-lg mb-2">Topics</h3>
+
+      <div className="flex flex-row flex-wrap gap-2">
+        {topics.map(topic => (
+          <div key={topic.id}>
+            <Link href={paths.topicView(topic.slug)}>
+              <Chip color="warning" variant="shadow">
+                {topic.slug}
+              </Chip>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }
 

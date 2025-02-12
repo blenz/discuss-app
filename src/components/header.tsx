@@ -6,9 +6,9 @@ import SearchInput from './search-input'
 
 function Header() {
   return (
-    <Navbar className="shadow mb-6">
+    <Navbar className="bg-slate-300 p-6 text-center shadow-md rounded-md">
       <NavbarBrand>
-        <Link href="/" className="font-bold">
+        <Link href="/" className="font-bold text-black">
           Discuss
         </Link>
       </NavbarBrand>

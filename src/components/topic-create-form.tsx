@@ -22,9 +22,11 @@ function TopicCreateForm() {
 
   return (
     <Popover placement="left">
-      <PopoverTrigger>
-        <Button>Create Topic</Button>
-      </PopoverTrigger>
+      <div className="flex justify-center">
+        <PopoverTrigger>
+          <Button color="primary">Create Topic</Button>
+        </PopoverTrigger>
+      </div>
       <PopoverContent>
         <Form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4 p-4 w-80">
